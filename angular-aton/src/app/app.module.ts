@@ -1,32 +1,36 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NZ_I18N } from 'ng-zorro-antd/i18n';
-import { en_US } from 'ng-zorro-antd/i18n';
-import { registerLocaleData } from '@angular/common';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {NZ_I18N} from 'ng-zorro-antd/i18n';
+import {en_US} from 'ng-zorro-antd/i18n';
+import {registerLocaleData} from '@angular/common';
 import en from '@angular/common/locales/en';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MainPageComponent} from './components/main-page/main-page.component';
+import {UserListComponent} from './components/user-list/user-list.component';
+import {UserInfoComponent} from './components/user-info/user-info.component';
 
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainPageComponent,
+    UserListComponent,
+    UserInfoComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
-  providers: [
-    { provide: NZ_I18N, useValue: en_US }
-  ],
-  bootstrap: [AppComponent]
+  providers: [{provide: NZ_I18N, useValue: en_US}],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
