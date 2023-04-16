@@ -15,7 +15,6 @@ import {LoggingInterceptor} from './classes/logging.interceptor';
 
 import {NzNotificationModule} from 'ng-zorro-antd/notification';
 import {NzConfig, NZ_CONFIG} from 'ng-zorro-antd/core/config';
-import { MainPageModule } from './components/main-page/main-page.module';
 
 registerLocaleData(en);
 
@@ -27,7 +26,6 @@ const ngZorroConfig: NzConfig = {
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    MainPageModule,
     AppRoutingModule,
     FormsModule,
     RouterModule,

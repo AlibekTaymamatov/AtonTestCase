@@ -8,7 +8,6 @@ import {NzAvatarModule} from 'ng-zorro-antd/avatar';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import {NzSpinModule} from 'ng-zorro-antd/spin';
-import { UserInfoModule } from "../user-info/user-info.module";
 
 @NgModule({
     declarations: [UserListComponent],
@@ -22,7 +21,6 @@ import { UserInfoModule } from "../user-info/user-info.module";
         NzButtonModule,
         NzPaginationModule,
         NzSpinModule,
-        UserInfoModule
     ]
 })
 export class UserListModule {}

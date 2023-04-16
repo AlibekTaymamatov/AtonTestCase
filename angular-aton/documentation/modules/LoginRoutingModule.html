@@ -35,7 +35,7 @@
 
 <ol class="breadcrumb">
     <li>Modules</li>
-    <li >AppRoutingModule</li>
+    <li >LoginRoutingModule</li>
 </ol>
 
 
@@ -55,7 +55,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/app-routing.module.ts</code>
+            <code>src/app/components/login/login-routing.module.ts</code>
         </p>
 
 
@@ -73,23 +73,21 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {NgModule} from &#x27;@angular/core&#x27;;
-import {RouterModule, Routes} from &#x27;@angular/router&#x27;;
-import { authGuard } from &#x27;./classes/auth.guard&#x27;;
+import {Route, RouterModule} from &#x27;@angular/router&#x27;;
+import {LoginComponent} from &#x27;./login.component&#x27;;
 
-const routes: Routes &#x3D; [
+const routes: Route[] &#x3D; [
   {
     path: &#x27;&#x27;,
-    loadChildren: () &#x3D;&gt; &quot;import(&#x27;./components/main-page/main-page.module&#x27;).then(m &#x3D;&gt; m.MainPageModule)&quot;,
-
+    component: LoginComponent,
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
-</code></pre>
+export class LoginRoutingModule {}</code></pre>
     </div>
 </div>
 
@@ -135,7 +133,7 @@ export class AppRoutingModule {}
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
-            var COMPODOC_CURRENT_PAGE_URL = 'AppRoutingModule.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'LoginRoutingModule.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
