@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {UserList} from 'src/app/models/users.model';
 import {UserService} from 'src/app/services/user.service';
@@ -10,10 +9,8 @@ import {UserService} from 'src/app/services/user.service';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit, OnDestroy {
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService) {}
 
-  public isModalVisible = false;
-  public isAddNewUser = false;
   public listUsers = {} as UserList;
   public isSpinning = false;
   public pageSizes = [4, 8, 12];
@@ -27,15 +24,10 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.userService.userInfo$.subscribe(newUser => {
-      this.listUsers.data.map(oldUser =>
-        newUser.id === oldUser.id ? newUser : oldUser
-      ),
-        this.listUsers.data.forEach(oldUser => {
-          if (newUser.id !== oldUser.id) {
-            this.listUsers.data.push(newUser);
-          }
-        });
+    this.userService.userInfo$.subscribe(user => {
+      let index = this.listUsers?.data?.findIndex(oldUser => oldUser.id === user.id);
+      if (index < 0) {this.listUsers.data.push(user);}
+      this.listUsers?.data?.splice(index, 1, user);
     });
   }
 
@@ -80,21 +72,6 @@ export class UserListComponent implements OnInit, OnDestroy {
         this.isSpinning = false;
       },
     });
-  }
-
-  addUser() {
-    this.isAddNewUser = true;
-    this.isModalVisible = true;
-  }
-
-  // Метод, который будет вызван при закрытии модального окна
-  handleCloseModal() {
-    this.isModalVisible = false;
-  }
-
-  editUser() {
-    this.isAddNewUser = false;
-    this.isModalVisible = true;
   }
 
   ngOnDestroy(): void {

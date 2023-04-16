@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {UserList} from '../models/users.model';
 import {User, UserInfo} from '../models/user.model';
 import {HttpClient} from '@angular/common/http';
-import {Observable, Subject, catchError, tap} from 'rxjs';
+import {Observable, Subject, tap} from 'rxjs';
 import {environment} from 'src/environments/environment.development';
 
 @Injectable({providedIn: 'root'})
@@ -24,7 +24,11 @@ export class UserService {
   }
 
   public addUser(data: User): Observable<User> {
-    return this.http.post<User>(this.url, data, {headers:{'Access-Control-Allow-Origin':'*', 'Access-Control-Allow-Methods':'*'}})
+    return this.http.post<User>(this.url, data).pipe(
+      tap({
+        next: (user) => this.userInfo$.next(user),
+      })
+    );
   }
 
   public editUserId(data: User): Observable<User> {

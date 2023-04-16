@@ -1,38 +1,39 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { User } from 'src/app/models/user.model';
-import { UserService } from 'src/app/services/user.service';
+import {Component,OnDestroy,OnInit,} from '@angular/core';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {User} from 'src/app/models/user.model';
+import {UserService} from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',
-  styleUrls: ['./user-info.component.scss']
+  styleUrls: ['./user-info.component.scss'],
 })
-export class UserInfoComponent implements OnInit, OnDestroy{
-
+export class UserInfoComponent implements OnInit, OnDestroy {
   constructor(
     private fb: UntypedFormBuilder,
     private userService: UserService,
     private activatedroute: ActivatedRoute,
-    private router: Router) {
-      this.userId = this.activatedroute.children[0].snapshot.params['id']
+    private router: Router)
+    {
+      this.userId =this.activatedroute.parent?.parent?.firstChild?.snapshot.params['id'];
+      this.typePath =this.activatedroute.parent?.parent?.firstChild?.snapshot.routeConfig?.path?.split('/').shift();
     }
 
-  @Input() isAddNewUser = false;
-  // Исходящие события
-  @Output() closeModal = new EventEmitter<any>();
+  public isAddNewUser = false;
   public isVisible = true;
   public isConfirmLoading = false;
   public formData!: UntypedFormGroup;
   public userInfo = {} as User;
-  public defaultImage = '//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+  public defaultImage ='//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
   public userId: number;
+  public typePath?: string;
   private memSub?: Subscription;
   private memSubInfo?: Subscription;
 
   ngOnInit(): void {
+    this.chekTypePath();
     this.formData = this.fb.group({
       email: [null, [Validators.required]],
       first_name: [null, [Validators.required]],
@@ -40,52 +41,64 @@ export class UserInfoComponent implements OnInit, OnDestroy{
       avatar: [null, [Validators.required]],
     });
 
-    if(!this.isAddNewUser){this.getUserId()}
+    if (!this.isAddNewUser) {this.getUserId();}
+  }
+
+  chekTypePath() {
+    if (this.typePath === 'new-user') {
+      this.isAddNewUser = true;
+    } else if (this.typePath === 'user') {
+      this.isAddNewUser = false;
+    }
   }
 
   handleOk(): void {
-   this.editUser()
-   this.applyCloseEvent()
+    this.editUser();
   }
 
   handleAdd(): void {
-  this.addUser()
-  this.applyCloseEvent()
+    this.addUser();
   }
 
   handleCancel(): void {
-  this.applyCloseEvent()
-  }
-
-  applyCloseEvent(): void {
     this.isVisible = false;
-    this.closeModal.emit();
-    this.router.navigate(["users"]);
+    this.router.navigate(['users']);
   }
 
-  getUserId(){
+  getUserId() {
     this.memSubInfo = this.userService.getUserId(this.userId).subscribe({
-      next:(user)=>{this.userInfo = user.data, this.formData.patchValue(user.data)},
-      complete:()=>{},
-      error:()=>{ this.applyCloseEvent()}
-    })
+      next: user => {(this.userInfo = user.data), this.formData.patchValue(user.data);},
+      error: () => {this.handleCancel();},
+    });
   }
 
-  addUser(){
+  addUser() {
     this.isConfirmLoading = true;
-    this.memSub = this.userService.addUser(this.getFormValueModelCreate()).subscribe({
-      complete:()=>{this.isConfirmLoading = false;},
-      error:()=>{ this.applyCloseEvent(), this.isConfirmLoading = false;}
-    })
+    this.memSub = this.userService
+      .addUser(this.getFormValueModelCreate())
+      .subscribe({
+        complete: () => {
+          this.handleCancel(), (this.isConfirmLoading = false);
+        },
+        error: () => {
+          this.handleCancel(), (this.isConfirmLoading = false);
+        },
+      });
   }
 
-  editUser(){
+  editUser() {
     this.isConfirmLoading = true;
-    this.memSub = this.userService.editUserId(this.getFormValueModelPut()).subscribe({
-      next:()=>{},
-      complete:()=>{this.applyCloseEvent(), this.isConfirmLoading = false;},
-      error:()=>{ this.applyCloseEvent(), this.isConfirmLoading = false;},
-    })
+    this.memSub = this.userService
+      .editUserId(this.getFormValueModelPut())
+      .subscribe({
+        next: () => {},
+        complete: () => {
+          this.handleCancel(), (this.isConfirmLoading = false);
+        },
+        error: () => {
+          this.handleCancel(), (this.isConfirmLoading = false);
+        },
+      });
   }
 
   getFormValueModelCreate(): User {
@@ -105,7 +118,7 @@ export class UserInfoComponent implements OnInit, OnDestroy{
       last_name: model.last_name,
       email: model.email,
       avatar: model.avatar,
-      id: this.userInfo.id
+      id: this.userInfo.id,
     };
   }
 

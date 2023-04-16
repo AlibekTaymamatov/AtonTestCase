@@ -1,10 +1,10 @@
-<button nz-button [routerLink]="['new-user']" (click)="addUser()" nzType="primary">Add User</button>
+<button nz-button [routerLink]="['new-user']" nzType="primary">Add User</button>
 <br />
 <br />
 <div *ngIf="listUsers">
     <nz-spin [nzSpinning]="isSpinning">
         <nz-table [nzData]="listUsers.data" [nzPageIndex]="pageIndex" [nzTotal]="total" [nzPageSize]="pageSize"
-            [nzScroll]="{ y: '260px' }" (nzPageSizeChange)="onPageSizeChange($event)"
+            [nzScroll]="{ y: '460px' }" (nzPageSizeChange)="onPageSizeChange($event)"
             (nzPageIndexChange)="onPageIndexChange($event)" [nzShowSizeChanger]="true" [nzShowPagination]="true"
             [nzFrontPagination]="false" [nzPageSizeOptions]="pageSizes">
             <thead>
@@ -23,7 +23,7 @@
                     <td>{{data.first_name}} {{data.last_name}}</td>
                     <td>{{ data.email }}</td>
                     <td>
-                        <a [routerLink]="['user', data.id]" (click)="editUser()">Edit</a>
+                        <a [routerLink]="['user', data.id]">Edit</a>
                         <nz-divider nzType="vertical"></nz-divider>
                         <a (click)="deleteUserId(data.id!)">Delete</a>
                     </td>
@@ -32,5 +32,4 @@
         </nz-table>
     </nz-spin>
 </div>
-<app-user-info [isAddNewUser]="isAddNewUser"  *ngIf="isModalVisible"  (closeModal)="handleCloseModal()" >
-</app-user-info>
+<router-outlet></router-outlet>

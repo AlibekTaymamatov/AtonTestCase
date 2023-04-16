@@ -84,8 +84,7 @@
               "browserTarget": "angular-aton:build:production"
             },
             "development": {
-              "browserTarget": "angular-aton:build:development",
-              "proxyConfig": "src/proxy.conf.json"
+              "browserTarget": "angular-aton:build:development"
             }
           },
           "defaultConfiguration": "development"

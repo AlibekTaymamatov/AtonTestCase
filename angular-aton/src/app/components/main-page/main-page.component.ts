@@ -13,7 +13,7 @@ export class MainPageComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngDoCheck(): void {
+  ngAfterViewInit(): void {
     this.authService.isAuth$.subscribe(i => (this.isAuth = i));
   }
 
