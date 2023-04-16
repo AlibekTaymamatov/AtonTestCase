@@ -1,10 +1,13 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {MainPageComponent} from './components/main-page/main-page.component';
+import { authGuard } from './classes/auth.guard';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/welcome', pathMatch: 'full'},
-  {path: 'welcome', component: MainPageComponent},
+  {
+    path: '',
+    loadChildren: () => import('./components/main-page/main-page.module').then(m => m.MainPageModule),
+
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,10 @@
+{
+    "/api/*": {
+        "target": "https://reqres.in/",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/api": ""
+        }
+    }
+}

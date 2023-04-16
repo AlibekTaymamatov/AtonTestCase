@@ -1,0 +1,55 @@
+.trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .trigger:hover {
+    color: #1890ff;
+  }
+
+  .logo {
+    margin: 16px;
+  }
+
+  nz-header {
+    background: #fff;
+    padding: 0;
+  }
+
+  nz-content {
+    margin: 0 16px;
+  }
+
+  nz-breadcrumb {
+    margin: 16px 0;
+  }
+
+  .item-bottom{
+    bottom: 0px;
+    position: absolute;
+    max-width: 100%;
+    margin-bottom: 20%;
+  }
+
+  .inner-content {
+    padding: 24px;
+    background: #fff;
+    min-height: 360px;
+    height: 100%;
+  }
+
+  nz-footer {
+    text-align: center;
+  }
+
+  ::ng-deep .ant-layout {
+    min-height: 100%;
+
+    [nz-icon] {
+      font-size: 26px;
+    }
+
+}

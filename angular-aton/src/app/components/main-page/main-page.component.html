@@ -1,1 +1,32 @@
-<p>main-page works!</p>
+<nz-layout>
+    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+        <div class="logo"></div>
+        <ul nz-menu nzTheme="dark" nzMode="inline">
+            <li nz-menu-item routerLink="users" routerLinkActive="active" ariaCurrentWhenActive="page">
+                <span nz-icon nzType="user" nzTheme="outline"></span>
+                <span>Users</span>
+            </li>
+            <li nz-menu-item class="item-bottom" routerLink="login" routerLinkActive="active"
+                ariaCurrentWhenActive="page" *ngIf="!isAuth">
+                <span nz-icon nzType="login" nzTheme="outline"></span>
+                <span>login</span>
+            </li>
+            <li nz-menu-item class="item-bottom" *ngIf="isAuth" (click)="logout()">
+                <span nz-icon nzType="logout" nzTheme="outline"></span>
+                <span>logout</span>
+            </li>
+        </ul>
+    </nz-sider>
+    <nz-layout>
+        <nz-header>
+            <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+                (click)="isCollapsed = !isCollapsed"></span>
+        </nz-header>
+        <nz-content>
+            <div class="inner-content">
+                <router-outlet></router-outlet>
+            </div>
+        </nz-content>
+        <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
+    </nz-layout>
+</nz-layout>
