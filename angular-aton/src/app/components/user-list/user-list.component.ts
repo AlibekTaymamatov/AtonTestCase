@@ -17,16 +17,20 @@ export class UserListComponent implements OnInit, OnDestroy {
   public pageSize = 4;
   public pageIndex = 1;
   public total = 0;
-  private memSub?: Subscription;
+  private memSub$?: Subscription;
+  private memNewUser$?: Subscription;
 
   ngOnInit(): void {
     this.getUsers();
   }
 
   ngAfterViewInit(): void {
-    this.userService.userInfo$.subscribe(user => {
+    this.memNewUser$ = this.userService.userInfo$.subscribe(user => {
+      // поиск пользователя по id в массиве
       let index = this.listUsers?.data?.findIndex(oldUser => oldUser.id === user.id);
+      // если не нашли, тогда добавляем новый объект
       if (index < 0) {this.listUsers.data.push(user);}
+      // заменяем по индексу
       this.listUsers?.data?.splice(index, 1, user);
     });
   }
@@ -43,7 +47,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   getUsers(): void {
     this.isSpinning = true;
-    this.memSub = this.userService
+    this.memSub$ = this.userService
       .getUsers(this.pageIndex, this.pageSize)
       .subscribe({
         next: users => {
@@ -59,11 +63,9 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   deleteUserId(id: number): void {
     this.isSpinning = true;
-    this.memSub = this.userService.deleteUser(id).subscribe({
+    this.memSub$ = this.userService.deleteUser(id).subscribe({
       next: () => {
-        this.listUsers.data = this.listUsers.data.filter(
-          user => user.id !== id
-        );
+        this.listUsers.data = this.listUsers.data.filter(user => user.id !== id);
       },
       complete: () => {
         this.isSpinning = false;
@@ -75,6 +77,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.memSub?.unsubscribe();
+    this.memSub$?.unsubscribe();
+    this.memNewUser$?.unsubscribe();
   }
 }

@@ -10,10 +10,8 @@ import {NzNotificationService} from 'ng-zorro-antd/notification';
 
 /**
  *
- *
- * @export
  * @class Класс перехватчик для логирования
- * @implements {HttpInterceptor}
+ *
  */
 @Injectable()
 export class LoggingInterceptor implements HttpInterceptor {

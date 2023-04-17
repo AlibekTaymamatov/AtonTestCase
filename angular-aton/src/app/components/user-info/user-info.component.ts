@@ -17,7 +17,9 @@ export class UserInfoComponent implements OnInit, OnDestroy {
     private activatedroute: ActivatedRoute,
     private router: Router)
     {
+      // получаем id пользователя
       this.userId =this.activatedroute.parent?.parent?.firstChild?.snapshot.params['id'];
+      // получаем название пути
       this.typePath =this.activatedroute.parent?.parent?.firstChild?.snapshot.routeConfig?.path?.split('/').shift();
     }
 
