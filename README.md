@@ -2,7 +2,7 @@
 ## Введение
 Проект был реализован с помощью набора UI-компонентов `Ng-Zorro`, фреймворка `Angular` и тестового сервиса [reqres.in](https://reqres.in/). Генерация документации происходит с помощью инструмента `Compodoc`.
 Cтарался придерживаться style guide **AirBnB** и **Google TypeScript**.
-### [Demo](https://alibektaymamatov.github.io/AtonTestCase/users)
+### [Demo](https://alibektaymamatov.github.io/AtonTestCase/)
 Ниже описана тестовая задача, а также условия её реализации.
 ## Задача
 
